@@ -1,46 +1,56 @@
+# taps
 tap "felixkratz/formulae"
 tap "hashicorp/tap"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
-brew "act"
-brew "chezmoi"
-brew "d2"
-brew "docker-compose"
-brew "kew"
-brew "mas"
-brew "oh-my-posh"
-brew "pulumi"
+
+# brews
+## tools
 brew "scrcpy"
-brew "terraform"
-brew "zsh-autosuggestions"
-brew "zsh-fast-syntax-highlighting"
+
+## development
+brew "d2"
+brew "pulumi"
+brew "terraform" # tap "hashicorp/tap"
+
+## customization
+brew "chezmoi"
 brew "felixkratz/formulae/borders"
 brew "felixkratz/formulae/sketchybar"
-cask "alt-tab"
-cask "amazon-q"
+
+# cask
+## font
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+
+## messaging
+cask "telegram"
+cask "whatsapp"
+
+## media
+cask "vlc"
+cask "tidal"
+cask "sonobus"
+
+## development
 cask "android-platform-tools"
 cask "arduino-ide"
-cask "brave-browser"
-cask "chatgpt"
 cask "docker-desktop"
-cask "jdownloader"
-cask "loop"
-cask "obs"
 cask "orbstack"
-cask "protonvpn"
-cask "raycast"
-cask "remote-desktop-manager"
-cask "shottr"
-cask "sonobus"
-cask "steam"
-cask "telegram"
-cask "the-unarchiver"
-cask "tidal"
-cask "unnaturalscrollwheels"
-cask "utm"
-cask "vivaldi"
-cask "vlc"
 cask "warp"
-cask "wezterm"
-cask "whatsapp"
-cask "zen"
+
+## customization
+cask "alt-tab"
+cask "loop"
+cask "raycast"
+cask "shottr"
+cask "unnaturalscrollwheels"
+
+## tools
+cask "chatgpt"
+cask "jdownloader"
+cask "the-unarchiver"
+cask "utm"
+
+# other
+cask "vivaldi"
