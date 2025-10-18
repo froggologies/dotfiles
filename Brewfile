@@ -1,17 +1,24 @@
 # taps
 tap "felixkratz/formulae"
-tap "hashicorp/tap"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 
 # brews
+## native alternative
+brew "eza"      # ls
+brew "bat"      # cat
+brew "tlrc"     # man
+brew "gping"    # ping
+brew "btop"     # htop
+
 ## tools
 brew "scrcpy"
+brew "cointop"
 
 ## development
+brew "neovim"
+brew "mise"
 brew "d2"
-brew "pulumi"
-brew "terraform" # tap "hashicorp/tap"
 
 ## customization
 brew "chezmoi"
@@ -33,11 +40,12 @@ cask "tidal"
 cask "sonobus"
 
 ## development
+cask "visual-studio-code"
 cask "android-platform-tools"
-cask "arduino-ide"
 cask "docker-desktop"
 cask "orbstack"
 cask "warp"
+cask "gcloud-cli"
 
 ## customization
 cask "alt-tab"
