@@ -1,3 +1,5 @@
+{{- if eq .chezmoi.os "darwin" }}
+
 # Amazon Q pre block. Keep at the top of this file.
 if [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
 	[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
@@ -51,3 +53,5 @@ source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 if [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
 	[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
 fi
+
+{{- end }}
