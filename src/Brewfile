@@ -1,64 +1,72 @@
-# taps
+# ──────────────────────────────
+# TAPS
+# ──────────────────────────────
 tap "felixkratz/formulae"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 
-# brews
-## native alternative
-brew "eza"      # ls
+# ──────────────────────────────
+# BREWS
+# ──────────────────────────────
+
+## Core Tools (native alternatives)
 brew "bat"      # cat
-brew "tlrc"     # man
-brew "gping"    # ping
 brew "btop"     # htop
+brew "eza"      # ls
+brew "gping"    # ping
+brew "tlrc"     # man
 
-## tools
-brew "scrcpy"
-brew "cointop"
-
-## development
-brew "neovim"
-brew "mise"
+## Development
 brew "d2"
+brew "mise"
+brew "neovim"
 
-## customization
+## Tools
+brew "cointop"
+brew "scrcpy"
+
+## Customization
 brew "chezmoi"
 brew "felixkratz/formulae/borders"
 brew "felixkratz/formulae/sketchybar"
 
-# cask
-## font
+# ──────────────────────────────
+# CASKS
+# ──────────────────────────────
+
+## Development
+cask "android-platform-tools"
+cask "docker-desktop"
+cask "gcloud-cli"
+cask "orbstack"
+cask "visual-studio-code"
+cask "warp"
+
+## Fonts
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
 
-## messaging
+## Messaging
 cask "telegram"
 cask "whatsapp"
 
-## media
-cask "vlc"
+## Media
+cask "stremio"
 cask "tidal"
-cask "sonobus"
+cask "vlc"
 
-## development
-cask "visual-studio-code"
-cask "android-platform-tools"
-cask "docker-desktop"
-cask "orbstack"
-cask "warp"
-cask "gcloud-cli"
-
-## customization
+## Customization
 cask "alt-tab"
 cask "loop"
 cask "raycast"
 cask "shottr"
 cask "unnaturalscrollwheels"
 
-## tools
+## Tools
 cask "chatgpt"
 cask "jdownloader"
 cask "the-unarchiver"
 cask "utm"
 
-# other
+## Other
 cask "vivaldi"
