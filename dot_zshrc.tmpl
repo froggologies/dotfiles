@@ -1,4 +1,8 @@
 {{- if eq .chezmoi.os "darwin" -}}
+
+setopt autocd
+setopt correct
+
 EDITOR=nvim
 
 # aliases
@@ -17,4 +21,5 @@ function brew() {
     sketchybar --trigger brew_update
   fi
 }
+
 {{- end -}}
