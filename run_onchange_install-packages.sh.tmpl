@@ -2,6 +2,8 @@
 
 #!/bin/sh
 
+# Brewfile hash: {{ include "./src/Brewfile" | sha256sum }}
+
 Brewfile=~/.local/share/chezmoi/src/Brewfile
 brew bundle --file=$Brewfile
 brew bundle cleanup --force --file=$Brewfile
