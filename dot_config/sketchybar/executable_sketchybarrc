@@ -47,12 +47,12 @@ defaults=(
 
 	background.height=30
 	background.corner_radius=10
-	background.border_color=0x7f${SUBTEXT0}
+	background.border_color=0x7f${SURFACE2}
 	background.border_width=2
 
 	popup.background.border_width=2
 	popup.background.corner_radius=10
-	popup.background.border_color=0x7f${SUBTEXT0}
+	popup.background.border_color=0x7f${SURFACE2}
 	popup.background.color=$POPUP_BACKGROUND_COLOR
 	popup.background.shadow.drawing=on
 	popup.blur_radius=20
