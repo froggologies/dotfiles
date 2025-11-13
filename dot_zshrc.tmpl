@@ -24,4 +24,8 @@ function brew() {
 
 eval "$(mise activate zsh)"
 
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
+eval "$(oh-my-posh init zsh)"
+fi
+
 {{- end -}}
