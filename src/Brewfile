@@ -40,6 +40,7 @@ brew "felixkratz/formulae/sketchybar"
 ## Development
 cask "android-platform-tools"
 cask "gcloud-cli"
+cask "ghostty"
 cask "orbstack"
 cask "visual-studio-code"
 cask "warp"
