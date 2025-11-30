@@ -27,6 +27,7 @@ brew "neovim"
 ## Tools
 brew "cointop"
 brew "scrcpy"
+brew "netcat"
 
 ## Customization
 brew "chezmoi"
@@ -40,6 +41,7 @@ brew "oh-my-posh"
 
 ## Development
 cask "android-platform-tools"
+cask "antigravity"
 cask "gcloud-cli"
 cask "ghostty"
 cask "orbstack"
@@ -68,6 +70,7 @@ cask "unnaturalscrollwheels"
 
 ## Tools
 cask "chatgpt"
+cask "comfyui"
 cask "jdownloader"
 cask "the-unarchiver"
 cask "utm"
