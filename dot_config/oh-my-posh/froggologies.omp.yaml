@@ -133,3 +133,13 @@ tooltips:
     template: "󰸏 {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }}"
     tips:
       - aws
+  
+  # System
+  - type: text
+    foreground: 9
+    foreground_templates:
+    template: "{{ if not .Segments.Path.Writable }} Not Writable{{ end }}"
+    tips:
+      - sudo
+      - vim
+      - nano
