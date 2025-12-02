@@ -11,11 +11,11 @@ blocks:
         foreground: 10
         foreground_templates:
           - "{{ if gt .Code 0 }}9{{ end }}"
-        template: "{{ if gt .Segments.Executiontime.Ms 0 }}❯ {{ end }}"
+        template: "{{ if or (gt .Segments.Executiontime.Ms 0) (gt .Code 0) }}❯ {{ end }}"
       
       - type: time
         foreground: 11
-        template: "{{ if gt .Segments.Executiontime.Ms 0 }} {{ .CurrentDate | date .Format }} {{ end }}"
+        template: "{{ if or (gt .Segments.Executiontime.Ms 0) (gt .Code 0) }} {{ .CurrentDate | date .Format }} {{ end }}"
 
       - type: executiontime
         foreground: 7
@@ -25,13 +25,13 @@ blocks:
 
       - type: status
         foreground: 9
-        template: "{{ if .String }} {{ .String }} {{ else }} {{ end }}"
+        template: "<b>{{ if gt .Code 0 }} {{ .String }} {{ reason .Code }}{{ end }}</b>"
 
   - type: prompt
     alignment: left
     segments:
       - type: text
-        template: "{{ if gt .Segments.Executiontime.Ms 0 }}\n {{ end }}"
+        template: "{{ if or (gt .Segments.Executiontime.Ms 0) (gt .Code 0) }}\n {{ end }}"
 
   - type: prompt
     alignment: left
@@ -43,11 +43,11 @@ blocks:
 
       - type: session
         foreground: 15
-        template: "{{ if .SSHSession }}\ueba9 {{ end }}{{ .UserName }}@{{ .HostName }} "
+        template: "{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} "
 
       - type: path
         foreground: 12
-        template: "<b>{{ .Path }}<\b> "
+        template: "<b>{{ .Path }}</b> "
         properties:
           folder_icon: 󰝰
           folder_separator_icon: " / "
@@ -60,7 +60,7 @@ blocks:
 
       - type: project
         foreground: 15
-        template: "{{ if .Error }}{{ .Error }}{{ else }}{{ if .Version }}\uf487 {{.Version}}{{ end }} {{ if .Name }}{{ .Name }}{{ end }}{{ end }} "
+        template: "{{ if .Error }}{{ .Error }}{{ else }}{{ if .Version }} {{.Version}}{{ end }} {{ if .Name }}{{ .Name }}{{ end }}{{ end }} "
  
   - type: prompt
     alignment: left
@@ -84,7 +84,7 @@ tooltips:
   # CLI
   - type: docker
     foreground: 15
-    template: "\uf308 {{ .Context }}"
+    template: " {{ .Context }}"
     tips:
       - docker
       - docker-compose
