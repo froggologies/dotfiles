@@ -1,0 +1,135 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version: 3
+# console_title_template: "{{if .Root}} \u26a1 {{end}}{{.Folder | replace \"~\" \"🏚\" }} @ {{.HostName}}"
+final_space: true
+blocks:
+  - type: prompt
+    alignment: left
+    segments:
+      - type: text
+        foreground: 10
+        foreground_templates:
+          - "{{ if gt .Code 0 }}9{{ end }}"
+        template: "{{ if gt .Segments.Executiontime.Ms 0 }}❯ {{ end }}"
+      
+      - type: time
+        foreground: 11
+        template: "{{ if gt .Segments.Executiontime.Ms 0 }} {{ .CurrentDate | date .Format }} {{ end }}"
+
+      - type: executiontime
+        foreground: 7
+        template: "{{ if gt .Ms 0 }}󱎫 {{ .FormattedMs }} {{ end }}"
+        properties:
+          threshold: 1
+
+      - type: status
+        foreground: 9
+        template: "{{ if .String }} {{ .String }} {{ else }} {{ end }}"
+
+  - type: prompt
+    alignment: left
+    segments:
+      - type: text
+        template: "{{ if gt .Segments.Executiontime.Ms 0 }}\n {{ end }}"
+
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: os
+        foreground: 15
+        template: "{{ if .WSL }}WSL at {{ end }}{{.Icon}} "
+
+      - type: session
+        foreground: 15
+        template: "{{ if .SSHSession }}\ueba9 {{ end }}{{ .UserName }}@{{ .HostName }} "
+
+      - type: path
+        foreground: 12
+        template: "<b>{{ .Path }}<\b> "
+        properties:
+          folder_icon: 󰝰
+          folder_separator_icon: " / "
+          home_icon: 󰋜
+          style: agnoster
+
+      - type: git
+        foreground: 11
+        template: "{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uF046 {{ .Staging.String }}{{ end }} "
+
+      - type: project
+        foreground: 15
+        template: "{{ if .Error }}{{ .Error }}{{ else }}{{ if .Version }}\uf487 {{.Version}}{{ end }} {{ if .Name }}{{ .Name }}{{ end }}{{ end }} "
+ 
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: text
+        foreground: 15
+        template: "❯"
+
+  - type: rprompt
+    segments:
+      - type: shell
+        foreground: 7
+        template: "{{ .Name }}"
+
+secondary_prompt:
+  template: "    "
+
+tooltips_action: replace
+tooltips:
+  # CLI
+  - type: docker
+    foreground: 15
+    template: "\uf308 {{ .Context }}"
+    tips:
+      - docker
+      - docker-compose
+      - colima
+
+  - type: helm
+    foreground: 15
+    tips:
+      - helm
+
+  - type: kubectl
+    foreground: 15
+    tips:
+      - kubectl
+      - k8s
+      - k
+      - minikube
+
+  - type: npm
+    foreground: 15
+    tips:
+      - npm
+
+  - type: pnpm
+    foreground: 15
+    tips:
+      - pnpm
+
+  - type: terraform
+    foreground: 15
+    template: "󱁢 {{ .WorkspaceName }}{{ if .Version }} {{ .Version }}{{ end }}"
+    properties:
+      fetch_version: true
+    tips:
+      - terraform
+
+  # Cloud
+  - type: gcp
+    foreground: 15
+    template: "󱇶 {{ .ActiveConfig }} {{ if .Project }}{{ .Project }} {{ end }}{{ if .Region }}{{ .Region }} {{ end }}"
+    tips:
+      - gcloud
+
+  - type: aws
+    foreground: 15
+    template: "󰸏 {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }}"
+    tips:
+      - aws

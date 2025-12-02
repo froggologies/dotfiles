@@ -21,6 +21,7 @@ brew "colima"
 brew "d2"
 brew "docker"
 brew "lazydocker"
+brew "minikube"
 brew "mise"
 brew "neovim"
 
