@@ -11,8 +11,10 @@ alias ...="cd ../../"
 alias ....="cd ../../../"
 alias .....="cd ../../../../"
 alias ls="eza --icons=auto --group-directories-first"
+alias ll="ls -l"
 alias la="ls -la"
 alias lt="ls -T"
+alias cb='for i in {0..15}; do printf "%3d: \e[48;5:${i}m   \e[0m " $i; [[ $((($i+1)%8)) == 0 ]] && echo; done'
 
 man() {
   command man "$@" | col -bx | bat -l man --paging=always --style=plain
