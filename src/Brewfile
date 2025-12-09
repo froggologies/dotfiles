@@ -46,7 +46,6 @@ cask "antigravity"
 cask "gcloud-cli"
 cask "ghostty"
 cask "orbstack"
-cask "visual-studio-code"
 cask "warp"
 
 ## Fonts
@@ -71,7 +70,6 @@ cask "unnaturalscrollwheels"
 
 ## Tools
 cask "chatgpt"
-cask "comfyui"
 cask "jdownloader"
 cask "the-unarchiver"
 cask "utm"
