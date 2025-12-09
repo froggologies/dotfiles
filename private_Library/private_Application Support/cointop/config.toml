@@ -99,8 +99,8 @@ enable_mouse = true
   character = "*"
   columns = ["rank", "name", "symbol", "price", "1h_change", "24h_change", "7d_change", "24h_volume", "market_cap", "available_supply", "total_supply", "last_updated"]
   compact_notation = false
-  names = []
-
+  names = ["BNB", "Bitcoin", "Cardano", "Dogecoin", "Ethereum", "Litecoin", "Monero", "Pepe", "Shiba Inu", "Solana", "TRON", "Tether", "XRP", "dogwifhat"]
+  
 [portfolio]
   columns = ["rank", "name", "symbol", "price", "holdings", "balance", "1h_change", "24h_change", "7d_change", "percent_holdings", "cost_price", "cost", "pnl", "pnl_percent", "last_updated"]
   compact_notation = false
