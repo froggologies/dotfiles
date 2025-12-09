@@ -1,0 +1,8 @@
+[tools]
+node = "24"
+npm = "11.6"
+"npm:aicommits" = "latest"
+"npm:tidyup" = "latest"
+python = "3.14"
+terraform = "latest"
+usage = "latest"
