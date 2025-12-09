@@ -14,6 +14,10 @@ alias ls="eza --icons=auto --group-directories-first"
 alias la="ls -la"
 alias lt="ls -T"
 
+man() {
+  command man "$@" | col -bx | bat -l man --paging=always --style=plain
+}
+
 # Sketchybar interactivity overloads
 function brew() {
   command brew "$@"
