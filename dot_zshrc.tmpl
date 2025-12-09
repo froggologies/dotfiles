@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" -}}
+{{ if eq .chezmoi.os "darwin" -}}
 
 setopt autocd
 setopt correct
@@ -31,4 +31,4 @@ if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/froggologies.omp.yaml)"
 fi
 
-{{- end -}}
+{{- end }}
