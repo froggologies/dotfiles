@@ -34,6 +34,10 @@ brew "netcat"
 brew "chezmoi"
 brew "felixkratz/formulae/borders"
 brew "felixkratz/formulae/sketchybar"
+
+## Terminal
+brew "antidote"
+brew "fzf"
 brew "oh-my-posh"
 
 # ──────────────────────────────

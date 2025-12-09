@@ -6,6 +6,9 @@ setopt correct
 autoload -Uz select-word-style
 select-word-style bash
 
+autoload -U compinit
+compinit
+
 # aliases
 alias ...="cd ../../"
 alias ....="cd ../../../"
@@ -36,5 +39,33 @@ eval "$(mise activate zsh)"
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/froggologies.omp.yaml)"
 fi
+
+source $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+# source antidote
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+
+# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+antidote load
+
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
+--color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
+--color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
+--color=selected-bg:#45475A \
+--color=border:#6C7086,label:#CDD6F4"
+
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --icons=auto --color=always $realpath'
 
 {{- end }}

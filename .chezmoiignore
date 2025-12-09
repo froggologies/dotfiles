@@ -3,4 +3,5 @@ README.md
 
 {{ if ne .chezmoi.os "darwin" }}
 .config
+Library
 {{ end }}
