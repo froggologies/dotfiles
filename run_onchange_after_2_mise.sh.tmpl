@@ -1,0 +1,11 @@
+{{ if eq .chezmoi.os "darwin" -}}
+
+#!/bin/sh
+
+# Brewfile hash: {{ include "./dot_config/mise/config.toml" | sha256sum }}
+
+echo "\033[1;38;5;11m\n❯ Installing mise tools\033[0m"
+mise install
+mise prune -y
+
+{{- end }}
