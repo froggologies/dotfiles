@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 
 version: 3
-# console_title_template: "{{if .Root}} \u26a1 {{end}}{{.Folder | replace \"~\" \"🏚\" }} @ {{.HostName}}"
+# console_title_template: "{{if .Root}} ⚡ {{end}}{{.Folder | replace \"~\" \"󰋜\" }} @ {{.HostName}}"
 final_space: true
 blocks:
   - type: prompt
@@ -43,7 +43,7 @@ blocks:
 
       - type: session
         foreground: 15
-        template: "{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} "
+        template: '{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} '
 
       - type: path
         foreground: 12
