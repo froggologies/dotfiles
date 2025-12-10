@@ -1,0 +1,40 @@
+{{ if eq .chezmoi.os "darwin" -}}
+
+export HISTCONTROL=ignoredups:erasedups
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+shopt -s histappend
+shopt -s checkwinsize
+shopt -s cmdhist
+
+# ====== Colors ======
+if command -v dircolors >/dev/null 2>&1; then
+    eval "$(dircolors -b)"
+fi
+
+alias ls='ls --color=auto'
+alias la='ls -la'
+alias ll='ls -l'
+alias grep='grep --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# ====== Bash Completion ======
+# (Most distros have this in /etc/bash_completion)
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# ====== Basic sanity ======
+export HISTCONTROL=ignoredups:erasedups
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+shopt -s histappend
+shopt -s checkwinsize
+shopt -s cmdhist
+
+PROMPT_COMMAND='PS1_CMD1=$(git branch --show-current 2>/dev/null)'; PS1='\[\e[92;1m\]\u\[\e[97m\]@\[\e[92m\]\H\[\e[0m\] \[\e[93;1m\]\t\[\e[0m\] \[\e[91;1m\]$?\[\e[0m\] \[\e[94;1m\]\w\[\e[0m\] \[\e[38;5;202;1m\]${PS1_CMD1}\n\[\e[39m\]>\[\e[0m\] '
+
+{{- end }}
