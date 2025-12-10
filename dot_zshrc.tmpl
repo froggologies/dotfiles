@@ -52,6 +52,10 @@ source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
 antidote load
 
 export FZF_DEFAULT_OPTS=" \
+--style full \
+--layout=reverse \
+--height=60% \
+--preview 'fzf-preview.sh {}' \
 --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
 --color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
 --color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
@@ -60,12 +64,26 @@ export FZF_DEFAULT_OPTS=" \
 
 # To make fzf-tab follow FZF_DEFAULT_OPTS.
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
-zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
+zstyle ':fzf-tab:*' fzf-flags --style=full --height=60% --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8,fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC,marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8,selected-bg:#45475A,border:#6C7086,label:#CDD6F4
+
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
 
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --icons=auto --color=always $realpath'
+zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview '
+  if [[ -d $realpath ]]; then
+    eza -1 --icons=auto --color=always "$realpath"
+  elif [[ -f $realpath ]]; then
+    bat --style=plain --color=always "$realpath"
+  else
+    # nothing — just stay quiet
+    echo ""
+  fi
+'
 
 {{- end }}
