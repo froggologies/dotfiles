@@ -84,14 +84,14 @@ export FZF_DEFAULT_OPTS=" \
 --style=full
 --layout=reverse \
 --height=60% \
---preview 'fzf-preview.sh {}' \
+--preview 'fzf-preview {}' \
 --bind 'focus:transform-header:file --brief {}' \
 --color=${FZF_COLORS}" \
 
 # fzf-tab configuration
 zstyle ':fzf-tab:*' fzf-flags --style=full --height=60% --color=${FZF_COLORS}
 
-zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview 'fzf-preview.sh ${realpath}'
+zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview 'fzf-preview ${realpath}'
 
 # zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview '
 #   if [[ -d $realpath ]]; then
