@@ -4,7 +4,7 @@
 
 # Brewfile hash: {{ include "./src/Brewfile" | sha256sum }}
 
-echo "\033[1;38;5;11m\n❯ Installing Homebrew packages\033[0m"
+echo "\033[1;38;5;11m\n❯ Synchronizing Homebrew packages\033[0m"
 Brewfile=~/.local/share/chezmoi/src/Brewfile
 brew bundle --no-upgrade --file=$Brewfile
 brew bundle cleanup --force --file=$Brewfile
