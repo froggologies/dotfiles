@@ -29,6 +29,7 @@ brew "neovim"
 brew "cointop"
 brew "scrcpy"
 brew "netcat"
+brew "chafa"
 
 ## Customization
 brew "chezmoi"

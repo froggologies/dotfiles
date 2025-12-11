@@ -70,11 +70,11 @@ blocks:
         foreground: 15
         template: "❯"
 
-  - type: rprompt
-    segments:
-      - type: shell
-        foreground: 7
-        template: "{{ .Name }}"
+  # - type: rprompt
+  #   segments:
+  #     - type: shell
+  #       foreground: 7
+  #       template: "{{ .Name }}"
 
 secondary_prompt:
   template: "    "
@@ -115,7 +115,7 @@ tooltips:
 
   - type: terraform
     foreground: 15
-    template: "󱁢 {{ .WorkspaceName }}{{ if .Version }} {{ .Version }}{{ end }}"
+    template: "󱁢 {{ .WorkspaceName }}{{ with .Version }} {{ . }}{{ end }}"
     properties:
       fetch_version: true
     tips:
@@ -124,13 +124,13 @@ tooltips:
   # Cloud
   - type: gcp
     foreground: 15
-    template: "󱇶 {{ .ActiveConfig }} {{ if .Project }}{{ .Project }} {{ end }}{{ if .Region }}{{ .Region }} {{ end }}"
+    template: "󱇶 {{ list .ActiveConfig .Project .Region .Account | compact | join \" \" }}"
     tips:
       - gcloud
 
   - type: aws
     foreground: 15
-    template: "󰸏 {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }}"
+    template: "󰸏 {{ list .Profile .Region | compact | join \" \" }}"
     tips:
       - aws
   

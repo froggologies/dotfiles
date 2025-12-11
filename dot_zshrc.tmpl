@@ -1,15 +1,112 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
+# =============================================================================
+# Environment & Path
+# =============================================================================
+export HOMEBREW_PREFIX="$(brew --prefix)"
+
+# =============================================================================
+# Plugins (Antidote)
+# =============================================================================
+# Initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+# Must be loaded before compinit to ensure completions are registered
+source "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh"
+antidote load
+
+# =============================================================================
+# Options & History
+# =============================================================================
 setopt autocd
 setopt correct
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_save_no_dups
+setopt hist_find_no_dups
 
+HISTSIZE=50000
+SAVEHIST=50000
+HISTDUP=erase
+
+bindkey "^p" history-search-backward
+bindkey "^n" history-search-forward
 autoload -Uz select-word-style
 select-word-style bash
 
+# =============================================================================
+# Completions
+# =============================================================================
 autoload -U compinit
 compinit
 
-# aliases
+# Set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+
+# Set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+
+# Google Cloud SDK completion
+if [[ -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc" ]]; then
+    source "${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc"
+fi
+
+# =============================================================================
+# Tools & Integrations
+# =============================================================================
+# mise
+eval "$(mise activate zsh)"
+
+# oh-my-posh
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
+    eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/froggologies.omp.yaml)"
+fi
+
+# =============================================================================
+# FZF Configuration
+# =============================================================================
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+# Catppuccin Macchiato Theme
+FZF_COLORS="bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8,\
+fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC,\
+marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8,\
+selected-bg:#45475A,\
+border:#6C7086,label:#CDD6F4"
+
+export FZF_DEFAULT_OPTS=" \
+--style=full
+--layout=reverse \
+--height=60% \
+--preview 'fzf-preview.sh {}' \
+--bind 'focus:transform-header:file --brief {}' \
+--color=${FZF_COLORS}" \
+
+# fzf-tab configuration
+zstyle ':fzf-tab:*' fzf-flags --style=full --height=60% --color=${FZF_COLORS}
+
+zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview 'fzf-preview.sh ${realpath}'
+
+# zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview '
+#   if [[ -d $realpath ]]; then
+#     eza -1 --icons=auto --color=always "$realpath"
+#   elif [[ -f $realpath ]]; then
+#     bat --style=plain --color=always "$realpath"
+#   else
+#     # nothing — just stay quiet
+#     echo ""
+#   fi
+# '
+
+# =============================================================================
+# Aliases & Functions
+# =============================================================================
 alias ...="cd ../../"
 alias ....="cd ../../../"
 alias .....="cd ../../../../"
@@ -31,59 +128,5 @@ function brew() {
     sketchybar --trigger brew_update
   fi
 }
-
-# mise
-eval "$(mise activate zsh)"
-
-# oh-my-posh
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
-eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/froggologies.omp.yaml)"
-fi
-
-source $(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc
-
-# Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
-
-# source antidote
-source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
-
-# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
-antidote load
-
-export FZF_DEFAULT_OPTS=" \
---style full \
---layout=reverse \
---height=60% \
---preview 'fzf-preview.sh {}' \
---color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
---color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
---color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
---color=selected-bg:#45475A \
---color=border:#6C7086,label:#CDD6F4"
-
-# To make fzf-tab follow FZF_DEFAULT_OPTS.
-# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
-# zstyle ':fzf-tab:*' use-fzf-default-opts yes
-
-zstyle ':fzf-tab:*' fzf-flags --style=full --height=60% --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8,fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC,marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8,selected-bg:#45475A,border:#6C7086,label:#CDD6F4
-
-# set descriptions format to enable group support
-# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
-zstyle ':completion:*:descriptions' format '[%d]'
-
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview '
-  if [[ -d $realpath ]]; then
-    eza -1 --icons=auto --color=always "$realpath"
-  elif [[ -f $realpath ]]; then
-    bat --style=plain --color=always "$realpath"
-  else
-    # nothing — just stay quiet
-    echo ""
-  fi
-'
 
 {{- end }}
