@@ -18,6 +18,15 @@ if [[ ! -r $file ]]; then
   fi
 fi
 
+if [[ -d "$file" ]]; then
+  if command -v eza > /dev/null; then
+    eza --tree --level=2 --color=always --icons=auto "$file"
+  else
+    ls -1 --color=always "$file"
+  fi
+  exit
+fi
+
 type=$(file --brief --dereference --mime -- "$file")
 
 if [[ ! $type =~ image/ ]]; then
