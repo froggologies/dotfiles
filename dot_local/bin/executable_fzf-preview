@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 if [[ $# -ne 1 ]]; then
-  >&2 echo "No arguments provided"
   exit 1
 fi
 
