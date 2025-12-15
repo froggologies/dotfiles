@@ -104,7 +104,6 @@ zstyle ':fzf-tab:*' fzf-flags ${=FZF_BASE_OPTS} --preview-window=hidden
 # fzf-tab default preview
 zstyle ':fzf-tab:complete:*' fzf-preview 'fzf-preview ${realpath}'
 
-
 # =============================================================================
 # Aliases & Functions
 # =============================================================================
@@ -129,5 +128,8 @@ function brew() {
     sketchybar --trigger brew_update
   fi
 }
+
+# Set grc aliases
+[[ -s "/opt/homebrew/etc/grc.zsh" ]] && source /opt/homebrew/etc/grc.zsh
 
 {{- end }}

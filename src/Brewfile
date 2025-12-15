@@ -40,6 +40,7 @@ brew "felixkratz/formulae/sketchybar"
 brew "antidote"
 brew "fzf"
 brew "oh-my-posh"
+brew "grc"
 
 # ──────────────────────────────
 # CASKS
