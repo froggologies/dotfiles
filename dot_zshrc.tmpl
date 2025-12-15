@@ -77,11 +77,24 @@ fi
 source <(fzf --zsh)
 
 # Catppuccin Macchiato Theme
-FZF_COLORS="bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8,\
-fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC,\
-marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8,\
-selected-bg:#45475A,\
-border:#6C7086,label:#CDD6F4"
+fzf_colors=(
+  "bg+:#313244"           # Surface 0
+  "spinner:#F5E0DC"       # Rosewater
+  "hl:#F38BA8"            # Red
+  "fg:#CDD6F4"            # Text
+  "header:#F38BA8"        # Red
+  "info:#CBA6F7"          # Mauve
+  "pointer:#F5E0DC"       # Rosewater
+  "marker:#B4BEFE"        # Lavender
+  "fg+:#CDD6F4"           # Text
+  "prompt:#CBA6F7"        # Mauve
+  "hl+:#F38BA8"           # Red
+  "selected-bg:#45475A"   # Surface 1
+  "border:#6C7086"        # Overlay 0
+  "label:#CDD6F4"         # Text
+)
+FZF_COLORS="${(j:,:)fzf_colors}"
+unset fzf_colors
 
 # Shared fzf flags
 FZF_BASE_OPTS="
