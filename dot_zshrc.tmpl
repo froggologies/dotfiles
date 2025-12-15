@@ -56,6 +56,9 @@ if [[ -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc" ]]; then
     source "${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc"
 fi
 
+# Terraform completion
+complete -o nospace -C "$(command -v terraform)" terraform
+
 # =============================================================================
 # Tools & Integrations
 # =============================================================================
@@ -80,29 +83,27 @@ marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8,\
 selected-bg:#45475A,\
 border:#6C7086,label:#CDD6F4"
 
-export FZF_DEFAULT_OPTS=" \
+# Shared fzf flags
+FZF_BASE_OPTS="
 --style=full
---layout=reverse \
---height=60% \
---preview 'fzf-preview {}' \
---bind 'focus:transform-header:file --brief {}' \
---color=${FZF_COLORS}" \
+--layout=reverse
+--height=60%
+--bind=ctrl-o:toggle-preview
+--color=${FZF_COLORS}
+"
+
+export FZF_DEFAULT_OPTS="
+${FZF_BASE_OPTS}
+--preview 'fzf-preview {}'
+--bind 'focus:transform-header:file --brief {}'
+"
 
 # fzf-tab configuration
-zstyle ':fzf-tab:*' fzf-flags --style=full --height=60% --color=${FZF_COLORS}
+zstyle ':fzf-tab:*' fzf-flags ${=FZF_BASE_OPTS} --preview-window=hidden
 
-zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd|open):*' fzf-preview 'fzf-preview ${realpath}'
+# fzf-tab default preview
+zstyle ':fzf-tab:complete:*' fzf-preview 'fzf-preview ${realpath}'
 
-# zstyle ':fzf-tab:complete:(cat|bat|ls|eza|vim|nvim|antigravity|cd):*' fzf-preview '
-#   if [[ -d $realpath ]]; then
-#     eza -1 --icons=auto --color=always "$realpath"
-#   elif [[ -f $realpath ]]; then
-#     bat --style=plain --color=always "$realpath"
-#   else
-#     # nothing — just stay quiet
-#     echo ""
-#   fi
-# '
 
 # =============================================================================
 # Aliases & Functions
