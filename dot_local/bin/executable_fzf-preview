@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $# -ne 1 ]]; then
-  >&2 echo "usage: $0 FILENAME[:LINENO][:IGNORED]"
+  >&2 echo "No arguments provided"
   exit 1
 fi
 
