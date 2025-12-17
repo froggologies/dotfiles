@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+if [[ $# -ne 1 ]]; then
+  echo "error"
+  exit 1
+fi
+
+file=${1/#\~\//$HOME/}
+
+center=0
+if [[ ! -r $file ]]; then
+  if [[ $file =~ ^(.+):([0-9]+)\ *$ ]] && [[ -r ${BASH_REMATCH[1]} ]]; then
+    file=${BASH_REMATCH[1]}
+    center=${BASH_REMATCH[2]}
+  elif [[ $file =~ ^(.+):([0-9]+):[0-9]+\ *$ ]] && [[ -r ${BASH_REMATCH[1]} ]]; then
+    file=${BASH_REMATCH[1]}
+    center=${BASH_REMATCH[2]}
+  fi
+fi
+
+# 🔒 HARD GUARD: only proceed if file OR directory
+if [[ ! -f $file && ! -d $file ]]; then
+  exit 0
+fi
+
+type=$(file --brief "$file")
+
+if [[ $type == "directory" ]]; then
+  echo " $type"
+  exit
+fi
+
+out="$(eza --icons=always "$file")"
+first_part="${out%% *}"
+echo "$first_part $type"
+exit

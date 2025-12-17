@@ -41,16 +41,6 @@ select-word-style bash
 autoload -U compinit
 compinit
 
-# Set descriptions format to enable group support
-zstyle ':completion:*:descriptions' format '[%d]'
-
-# Set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
-# Force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-zstyle ':completion:*' menu no
-
 # Google Cloud SDK completion
 if [[ -f "${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc" ]]; then
     source "${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc"
@@ -98,7 +88,6 @@ unset fzf_colors
 
 # Shared fzf flags
 FZF_BASE_OPTS="
---style=full
 --layout=reverse
 --height=60%
 --bind=ctrl-o:toggle-preview
@@ -107,15 +96,45 @@ FZF_BASE_OPTS="
 
 export FZF_DEFAULT_OPTS="
 ${FZF_BASE_OPTS}
+--style=full
 --preview 'fzf-preview {}'
+--input-label ' Input '
+--header-label ' File Type '
 --bind 'focus:transform-header:file --brief {}'
+--bind 'result:transform-list-label:
+  if [[ -z \$FZF_QUERY ]]; then
+    echo \" \$FZF_MATCH_COUNT items \"
+  else
+    echo \" \$FZF_MATCH_COUNT matches for [\$FZF_QUERY] \"
+  fi
+'
+--bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" 󰷊 [%s] \" {}'
+--bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"'
+--bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)'
 "
 
-# fzf-tab configuration
-zstyle ':fzf-tab:*' fzf-flags ${=FZF_BASE_OPTS} --preview-window=hidden
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
-# fzf-tab default preview
+# fzf-tab configuration
+zstyle ':fzf-tab:*' fzf-flags ${=FZF_BASE_OPTS} --border --preview-window=hidden
+
+# fzf-tab preview
 zstyle ':fzf-tab:complete:*' fzf-preview 'fzf-preview ${realpath}'
+
+# fzf-tab header
+zstyle ':fzf-tab:complete:*' fzf-bindings 'focus:transform-header({_FTB_INIT_}fzf-header "$realpath")'
 
 # =============================================================================
 # Aliases & Functions
