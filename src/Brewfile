@@ -30,6 +30,8 @@ brew "cointop"
 brew "scrcpy"
 brew "netcat"
 brew "chafa"
+brew "pandoc"
+brew "glow"
 
 ## Customization
 brew "chezmoi"
