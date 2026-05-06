@@ -1,0 +1,11 @@
+{
+  "app.disableAutoupdates": true,
+  "autocomplete.alwaysSuggestCurrentToken": false,
+  "autocomplete.firstTokenCompletion": true,
+  "autocomplete.fontFamily": "JetBrainsMono Nerd Font",
+  "autocomplete.fuzzySearch": true,
+  "autocomplete.scrollWrapAround": true,
+  "autocomplete.theme": "catppuccin",
+  "codeWhisperer.shareCodeWhispererContentWithAWS": false,
+  "telemetry.enabled": false
+}

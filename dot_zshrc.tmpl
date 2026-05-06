@@ -1,5 +1,10 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
+# Kiro CLI pre block. Keep at the top of this file.
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
+  [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+fi
+
 # =============================================================================
 # Environment & Path
 # =============================================================================
@@ -64,54 +69,54 @@ fi
 # FZF Configuration
 # =============================================================================
 # Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
+# source <(fzf --zsh)
 
 # Catppuccin Macchiato Theme
-fzf_colors=(
-  "bg+:#313244"           # Surface 0
-  "spinner:#F5E0DC"       # Rosewater
-  "hl:#F38BA8"            # Red
-  "fg:#CDD6F4"            # Text
-  "header:#F38BA8"        # Red
-  "info:#CBA6F7"          # Mauve
-  "pointer:#F5E0DC"       # Rosewater
-  "marker:#B4BEFE"        # Lavender
-  "fg+:#CDD6F4"           # Text
-  "prompt:#CBA6F7"        # Mauve
-  "hl+:#F38BA8"           # Red
-  "selected-bg:#45475A"   # Surface 1
-  "border:#6C7086"        # Overlay 0
-  "label:#CDD6F4"         # Text
-)
-FZF_COLORS="${(j:,:)fzf_colors}"
-unset fzf_colors
+# fzf_colors=(
+#   "bg+:#313244"           # Surface 0
+#   "spinner:#F5E0DC"       # Rosewater
+#   "hl:#F38BA8"            # Red
+#   "fg:#CDD6F4"            # Text
+#   "header:#F38BA8"        # Red
+#   "info:#CBA6F7"          # Mauve
+#   "pointer:#F5E0DC"       # Rosewater
+#   "marker:#B4BEFE"        # Lavender
+#   "fg+:#CDD6F4"           # Text
+#   "prompt:#CBA6F7"        # Mauve
+#   "hl+:#F38BA8"           # Red
+#   "selected-bg:#45475A"   # Surface 1
+#   "border:#6C7086"        # Overlay 0
+#   "label:#CDD6F4"         # Text
+# )
+# FZF_COLORS="${(j:,:)fzf_colors}"
+# unset fzf_colors
 
 # Shared fzf flags
-FZF_BASE_OPTS="
---layout=reverse
---height=60%
---bind=ctrl-o:toggle-preview
---color=${FZF_COLORS}
-"
+# FZF_BASE_OPTS="
+# --layout=reverse
+# --height=60%
+# --bind=ctrl-o:toggle-preview
+# --color=${FZF_COLORS}
+# "
 
-export FZF_DEFAULT_OPTS="
-${FZF_BASE_OPTS}
---style=full
---preview 'fzf-preview {}'
---input-label ' Input '
---header-label ' File Type '
---bind 'focus:transform-header:file --brief {}'
---bind 'result:transform-list-label:
-  if [[ -z \$FZF_QUERY ]]; then
-    echo \" \$FZF_MATCH_COUNT items \"
-  else
-    echo \" \$FZF_MATCH_COUNT matches for [\$FZF_QUERY] \"
-  fi
-'
---bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" 󰷊 [%s] \" {}'
---bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"'
---bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)'
-"
+# export FZF_DEFAULT_OPTS="
+# ${FZF_BASE_OPTS}
+# --style=full
+# --preview 'fzf-preview {}'
+# --input-label ' Input '
+# --header-label ' File Type '
+# --bind 'focus:transform-header:file --brief {}'
+# --bind 'result:transform-list-label:
+#   if [[ -z \$FZF_QUERY ]]; then
+#     echo \" \$FZF_MATCH_COUNT items \"
+#   else
+#     echo \" \$FZF_MATCH_COUNT matches for [\$FZF_QUERY] \"
+#   fi
+# '
+# --bind 'focus:transform-preview-label:[[ -n {} ]] && printf \" 󰷊 [%s] \" {}'
+# --bind 'focus:+transform-header:file --brief {} || echo \"No file selected\"'
+# --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)'
+# "
 
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
@@ -124,17 +129,17 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' menu no
 # Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-# switch group using `<` and `>`
-zstyle ':fzf-tab:*' switch-group '<' '>'
+# # switch group using `<` and `>`
+# zstyle ':fzf-tab:*' switch-group '<' '>'
 
-# fzf-tab configuration
-zstyle ':fzf-tab:*' fzf-flags ${=FZF_BASE_OPTS} --border --preview-window=hidden
+# # fzf-tab configuration
+# zstyle ':fzf-tab:*' fzf-flags ${=FZF_BASE_OPTS} --border --preview-window=hidden
 
-# fzf-tab preview
-zstyle ':fzf-tab:complete:*' fzf-preview 'fzf-preview ${realpath}'
+# # fzf-tab preview
+# zstyle ':fzf-tab:complete:*' fzf-preview 'fzf-preview ${realpath}'
 
-# fzf-tab header
-zstyle ':fzf-tab:complete:*' fzf-bindings 'focus:transform-header({_FTB_INIT_}fzf-header "$realpath")'
+# # fzf-tab header
+# zstyle ':fzf-tab:complete:*' fzf-bindings 'focus:transform-header({_FTB_INIT_}fzf-header "$realpath")'
 
 # =============================================================================
 # Aliases & Functions
@@ -147,6 +152,8 @@ alias ll="ls -l"
 alias la="ls -la"
 alias lt="ls -T"
 alias cb='for i in {0..15}; do printf "%3d: \e[48;5:${i}m   \e[0m " $i; [[ $((($i+1)%8)) == 0 ]] && echo; done'
+
+alias k='kubectl'
 
 man() {
   command man "$@" | col -bx | bat -l man --paging=always --style=plain
@@ -171,5 +178,10 @@ function chezmoi() {
 
 # Set grc aliases
 [[ -s "/opt/homebrew/etc/grc.zsh" ]] && source /opt/homebrew/etc/grc.zsh
+
+# Kiro CLI post block. Keep at the bottom of this file.
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
+  [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+fi
 
 {{- end }}

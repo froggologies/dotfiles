@@ -43,7 +43,7 @@ brew "felixkratz/formulae/sketchybar"
 
 ## Terminal
 brew "antidote"
-brew "fzf"
+# brew "fzf"
 brew "oh-my-posh"
 brew "grc"
 
@@ -77,10 +77,11 @@ cask "vlc"
 
 ## Customization
 cask "alt-tab"
+cask "kiro-cli"
 cask "loop"
 cask "raycast"
 cask "shottr"
-cask "unnaturalscrollwheels"
+# cask "unnaturalscrollwheels" # don't use 1.4.0, install manually 1.3.0 instead  
 
 ## Tools
 cask "chatgpt"
