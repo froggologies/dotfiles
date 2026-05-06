@@ -4,6 +4,7 @@
 tap "felixkratz/formulae"
 tap "jesseduffield/lazydocker"
 tap "koekeishiya/formulae"
+tap "bjarneo/cliamp"
 
 # ──────────────────────────────
 # BREWS
@@ -17,9 +18,11 @@ brew "gping"    # ping
 brew "tlrc"     # man
 
 ## Development
-brew "colima"
 brew "d2"
+brew "colima"
 brew "docker"
+brew "docker-compose"
+brew "helm"
 brew "lazydocker"
 brew "minikube"
 brew "mise"
@@ -43,6 +46,9 @@ brew "antidote"
 brew "fzf"
 brew "oh-my-posh"
 brew "grc"
+
+## Other
+brew "bjarneo/cliamp/cliamp"
 
 # ──────────────────────────────
 # CASKS
@@ -78,9 +84,11 @@ cask "unnaturalscrollwheels"
 
 ## Tools
 cask "chatgpt"
+cask "google-gemini"
 cask "jdownloader"
 cask "the-unarchiver"
 cask "utm"
 
 ## Other
 cask "vivaldi"
+cask "google-chrome"
