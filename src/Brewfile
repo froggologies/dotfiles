@@ -36,8 +36,6 @@ brew "minikube"
 brew "cointop"
 brew "scrcpy"
 brew "netcat"
-brew "pandoc"
-brew "glow"
 
 ## Customization
 brew "chezmoi"
@@ -46,7 +44,6 @@ brew "felixkratz/formulae/sketchybar"
 
 ## Terminal
 brew "antidote"
-# brew "fzf"
 brew "oh-my-posh"
 brew "grc"
 
