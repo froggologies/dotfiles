@@ -19,20 +19,23 @@ brew "tlrc"     # man
 
 ## Development
 brew "d2"
+brew "mise"
+brew "neovim"
+
+## DevOps
 brew "colima"
+brew "crane"
 brew "docker"
+brew "docker-buildx"
 brew "docker-compose"
 brew "helm"
 brew "lazydocker"
 brew "minikube"
-brew "mise"
-brew "neovim"
 
 ## Tools
 brew "cointop"
 brew "scrcpy"
 brew "netcat"
-brew "chafa"
 brew "pandoc"
 brew "glow"
 
