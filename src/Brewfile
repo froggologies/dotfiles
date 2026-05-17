@@ -31,6 +31,8 @@ brew "docker-compose"
 brew "helm"
 brew "lazydocker"
 brew "minikube"
+brew "tnk-studio/tools/lazykube"
+brew "helmfile"
 
 ## Tools
 brew "cointop"
