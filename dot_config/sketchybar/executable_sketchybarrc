@@ -1,13 +1,13 @@
 #!/bin/bash
 
 source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors
-source "$HOME/.config/sketchybar/icons.sh"  # Loads all defined icons
 
 ITEM_DIR="$HOME/.config/sketchybar/items"     # Directory where the items are configured
-PLUGIN_DIR="$HOME/.config/sketchybar/plugins" # Directory where all the plugin scripts are stored
+PLUGIN_DIR="$HOME/.config/sketchybar/scripts" # Directory where all the plugin scripts are stored
 
 FONT="JetBrainsMono Nerd Font" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
-PADDINGS=16                    # All paddings use this value (icon, label, background)
+PADDING=10                    # All paddings use this value (icon, label, background)
+HEIGHT=30
 
 # Setting up and starting the helper process
 HELPER=git.felix.helper
@@ -15,12 +15,9 @@ killall helper
 cd $HOME/.config/sketchybar/helper && make
 $HOME/.config/sketchybar/helper/helper $HELPER >/dev/null 2>&1 &
 
-# Unload the macOS on screen indicator overlay for volume change
-# launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist >/dev/null 2>&1 &
-
 # Setting up the general bar appearance of the bar
 bar=(
-	height=30
+	height=$HEIGHT
 	color=${ALPHA_BAR}${BASE}
 	position=bottom
 	sticky=on
@@ -35,60 +32,127 @@ sketchybar --bar "${bar[@]}"
 # Setting up default values
 defaults=(
 	updates=when_shown
-	icon.font="$FONT:Bold:16.0"
+
+	padding_right=$PADDING
+	padding_left=$PADDING
+
+	icon.font="$FONT:Bold:12.0"
 	icon.color=${ALPHA_ITEM}${TEXT}
-	icon.padding_left=$PADDINGS
-	icon.padding_right=$PADDINGS
+	icon.padding_right=5
 
-	label.font="$FONT:Semibold:14.0"
+	label=""
+	label.font="$FONT:Semibold:12.0"
 	label.color=${ALPHA_ITEM}${TEXT}
-	label.padding_left=$PADDINGS
-	label.padding_right=$PADDINGS
-
-	background.height=30
-	background.corner_radius=10
-	background.border_color=0x7f${SURFACE2}
-	background.border_width=2
 
 	popup.background.border_width=2
 	popup.background.corner_radius=10
 	popup.background.border_color=0x7f${SURFACE2}
-	popup.background.color=$POPUP_BACKGROUND_COLOR
+	popup.background.color=${ALPHA_ITEM}${BASE}
 	popup.background.shadow.drawing=on
-	popup.blur_radius=20
+	popup.y_offset=-5
 
 	shadow=on
 )
 
 sketchybar --default "${defaults[@]}"
 
+bracket=(
+ 	background.color=${ALPHA_ITEM}${BASE}
+	background.height=$HEIGHT
+	background.corner_radius=10
+	background.border_color=0x7f${SURFACE2}
+	background.border_width=2
+)
+
+pill=(
+ 	background.color=${ALPHA_ITEM}${BASE}
+	background.height=$HEIGHT
+	background.corner_radius=10
+	background.border_color=0x7f${SURFACE2}
+	background.border_width=2
+	label.padding_right=$PADDING
+	icon.padding_left=$PADDING
+	padding_right=0
+	padding_left=0
+)
+
+spacer=(
+	background.drawing=off
+	label.drawing=off
+	icon.drawing=off
+	width=10
+)
+
 # Left
-source "$ITEM_DIR/spaces.sh"
+
+source "$ITEM_DIR/space.sh"
+
+sketchybar --add bracket bracket_spaces '/space\..*/' \
+		   --set bracket_spaces "${bracket[@]}"
+
+sketchybar --add item spacer_left1 left \
+		   --set spacer_left1 "${spacer[@]}"
 
 source "$ITEM_DIR/front_app.sh"
+sketchybar --set front_app "${pill[@]}"
 
-spaces=(
-	background.color=${ALPHA_ITEM}${BASE}
-)
+sketchybar --add item spacer_left2 left \
+		   --set spacer_left2 "${spacer[@]}"
 
-sketchybar --add bracket spaces '/space\..*/' front_app \
-	--set spaces "${spaces[@]}"
+source "$ITEM_DIR/media.sh"
+sketchybar --set media "${pill[@]}"
 
 # Right
+
+source "$ITEM_DIR/clock.sh"
 source "$ITEM_DIR/calendar.sh"
 
-source "$ITEM_DIR/brew.sh"
-source "$ITEM_DIR/volume.sh"
+sketchybar --set clock padding_left=0
+
+sketchybar --add bracket bracket_time clock calendar \
+           --set bracket_time "${bracket[@]}"
+
+sketchybar --add item spacer_right1 right \
+		   --set spacer_right1 "${spacer[@]}"
+
 source "$ITEM_DIR/battery.sh"
+source "$ITEM_DIR/volume.sh"
+source "$ITEM_DIR/brew.sh"
 
-status_bracket=(
- background.color=${ALPHA_ITEM}${BASE}
-)
+sketchybar --set battery padding_left=0
+sketchybar --set volume padding_left=0
 
-sketchybar --add bracket status brew battery volume\
-           --set status "${status_bracket[@]}"
+sketchybar --add bracket bracket_status battery volume brew \
+           --set bracket_status "${bracket[@]}"
 
-source "$ITEM_DIR/cpu.sh"
+sketchybar --add item spacer_right2 right \
+		   --set spacer_right2 "${spacer[@]}"
+
+source "$ITEM_DIR/sys.sh"
+
+sketchybar --set cpu padding_left=0
+sketchybar --set ram padding_left=0
+
+sketchybar --add bracket bracket_sys cpu ram disk \
+           --set bracket_sys "${bracket[@]}"
+
+sketchybar --add item spacer_right3 right \
+		   --set spacer_right3 "${spacer[@]}"
+
+source "$ITEM_DIR/weather.sh"
+sketchybar --set weather "${pill[@]}"
+
+sketchybar --add item spacer_right4 right \
+		   --set spacer_right4 "${spacer[@]}"
+
+source "$ITEM_DIR/prayer.sh"
+sketchybar --set prayer "${pill[@]}"
+
+# sketchybar --add item spacer_right5 right \
+# 		   --set spacer_right5 "${spacer[@]}"
+
+# source "$ITEM_DIR/finance.sh"
+# sketchybar --set finance "${pill[@]}"
 
 # Forcing all item scripts to run (never do this outside of sketchybarrc)
 sketchybar --update
