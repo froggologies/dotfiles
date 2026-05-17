@@ -51,6 +51,7 @@ brew "grc"
 
 ## Other
 brew "bjarneo/cliamp/cliamp"
+brew "nowplaying-cli"
 
 # ──────────────────────────────
 # CASKS

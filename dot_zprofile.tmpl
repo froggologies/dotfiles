@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Kiro CLI post block. Keep at the bottom of this file.
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
   [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.pre.zsh"
 fi
 
@@ -14,7 +14,7 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
 
 # Kiro CLI post block. Keep at the bottom of this file.
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ]; then
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
   [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.post.zsh"
 fi
 
