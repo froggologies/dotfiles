@@ -52,6 +52,7 @@ brew "grc"
 ## Other
 brew "bjarneo/cliamp/cliamp"
 brew "nowplaying-cli"
+brew "gemini-cli"
 
 # ──────────────────────────────
 # CASKS
@@ -64,6 +65,7 @@ cask "gcloud-cli"
 cask "ghostty"
 cask "orbstack"
 cask "warp"
+cask "zed"
 
 ## Fonts
 cask "font-jetbrains-mono"
@@ -84,7 +86,7 @@ cask "kiro-cli"
 cask "loop"
 cask "raycast"
 cask "shottr"
-# cask "unnaturalscrollwheels" # don't use 1.4.0, install manually 1.3.0 instead  
+# cask "unnaturalscrollwheels" # don't use 1.4.0, install manually 1.3.0 instead
 
 ## Tools
 cask "chatgpt"
