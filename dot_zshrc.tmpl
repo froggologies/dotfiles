@@ -179,6 +179,9 @@ function chezmoi() {
 # Set grc aliases
 [[ -s "/opt/homebrew/etc/grc.zsh" ]] && source /opt/homebrew/etc/grc.zsh
 
+# Added by Antigravity IDE
+export PATH="/Users/frog/.antigravity-ide/antigravity-ide/bin:$PATH"
+
 # Kiro CLI post block. Keep at the bottom of this file.
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ] && [ "$TERM_PROGRAM" != "WarpTerminal" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
   [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

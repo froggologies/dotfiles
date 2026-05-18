@@ -35,9 +35,17 @@ sketchybar --add item weather.location popup.weather \
            --set weather.details icon=󰔄 \
                                  icon.color=${ALPHA_ITEM}${MAUVE} \
 \
+           --add item weather.uv popup.weather \
+           --set weather.uv icon=󰖨 \
+                            icon.color=${ALPHA_ITEM}${YELLOW} \
+\
            --add item weather.humidity popup.weather \
-           --set weather.humidity icon= \
+           --set weather.humidity icon=󰖏 \
                                    icon.color=${ALPHA_ITEM}${BLUE} \
+\
+           --add item weather.rain popup.weather \
+           --set weather.rain icon= \
+                              icon.color=${ALPHA_ITEM}${SKY} \
 \
            --add item weather.wind popup.weather \
            --set weather.wind icon=󰖝 \

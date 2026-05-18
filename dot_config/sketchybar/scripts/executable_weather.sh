@@ -45,6 +45,36 @@ render_bar() {
   FEELS_LIKE=$(echo "$WEATHER_JSON" | jq -r '.current_condition[0].FeelsLikeC')
   HUMIDITY=$(echo "$WEATHER_JSON" | jq -r '.current_condition[0].humidity')
   WIND=$(echo "$WEATHER_JSON" | jq -r '.current_condition[0].windspeedKmph')
+  UV_INDEX=$(echo "$WEATHER_JSON" | jq -r '.current_condition[0].uvIndex')
+  RAIN_CHANCE=$(echo "$WEATHER_JSON" | jq -r '[.weather[0].hourly[].chanceofrain | tonumber] | max')
+
+  # Determine UV color dynamically (Green for Low, Yellow for Mod, Orange for High, Red for Very High, Purple for Extreme)
+  if [ -z "$UV_INDEX" ] || [ "$UV_INDEX" = "null" ]; then
+    UV_COLOR="${ALPHA_ITEM}${TEXT}"
+  elif [ "$UV_INDEX" -le 2 ]; then
+    UV_COLOR="${ALPHA_ITEM}${GREEN}"
+  elif [ "$UV_INDEX" -le 5 ]; then
+    UV_COLOR="${ALPHA_ITEM}${YELLOW}"
+  elif [ "$UV_INDEX" -le 7 ]; then
+    UV_COLOR="${ALPHA_ITEM}${PEACH}"
+  elif [ "$UV_INDEX" -le 10 ]; then
+    UV_COLOR="${ALPHA_ITEM}${RED}"
+  else
+    UV_COLOR="${ALPHA_ITEM}${MAUVE}"
+  fi
+
+  # Determine Chance of Rain color dynamically (dim/normal if dry, sky blue if light, rich blue if high)
+  if [ -z "$RAIN_CHANCE" ] || [ "$RAIN_CHANCE" = "null" ]; then
+    RAIN_COLOR="${ALPHA_ITEM}${TEXT}"
+  elif [ "$RAIN_CHANCE" -eq 0 ]; then
+    RAIN_COLOR="${ALPHA_ITEM}${TEXT}"
+  elif [ "$RAIN_CHANCE" -le 20 ]; then
+    RAIN_COLOR="${ALPHA_ITEM}${SUBTEXT1}"
+  elif [ "$RAIN_CHANCE" -le 50 ]; then
+    RAIN_COLOR="${ALPHA_ITEM}${SKY}"
+  else
+    RAIN_COLOR="${ALPHA_ITEM}${BLUE}"
+  fi
 
   # --- Condition Icon Mapping ---
   # Based on wttr.in condition codes: https://wttr.in/:help
@@ -167,12 +197,14 @@ render_bar() {
   # Update the main bar item
   sketchybar --set "$NAME" icon="$ICON" label="${TEMPERATURE}°C" icon.color="$COLOR"
 
-  # Standardize all detail labels to be aligned without a colon using printf %-10s
-  SUNRISE_LABEL=$(printf "%-10s  %s" "Sunrise" "${SUNRISE}")
-  SUNSET_LABEL=$(printf "%-10s  %s" "Sunset" "${SUNSET}")
-  DETAILS_LABEL=$(printf "%-10s  %s" "Feels like" "${FEELS_LIKE}°C")
-  HUMIDITY_LABEL=$(printf "%-10s  %s" "Humidity" "${HUMIDITY}%")
-  WIND_LABEL=$(printf "%-10s  %s" "Wind" "${WIND} km/h")
+  # Standardize all detail labels to be aligned without a colon using printf %-12s
+  SUNRISE_LABEL=$(printf "%-12s  %s" "Sunrise" "${SUNRISE}")
+  SUNSET_LABEL=$(printf "%-12s  %s" "Sunset" "${SUNSET}")
+  DETAILS_LABEL=$(printf "%-12s  %s" "Feels like" "${FEELS_LIKE}°C")
+  UV_LABEL=$(printf "%-12s  %s" "UV Index" "${UV_INDEX}")
+  HUMIDITY_LABEL=$(printf "%-12s  %s" "Humidity" "${HUMIDITY}%")
+  RAIN_LABEL=$(printf "%-12s  %s" "Rain chance" "${RAIN_CHANCE}%")
+  WIND_LABEL=$(printf "%-12s  %s" "Wind" "${WIND} km/h")
 
   # Update the popup details
   sketchybar --set weather.location label="${LOCATION}" \
@@ -181,7 +213,9 @@ render_bar() {
              --set weather.moon icon="$MOON_ICON" icon.color="$MOON_COLOR" label="${MOON_PHASE} (${MOON_ILLUM}%)" \
              --set weather.condition icon="$ICON" icon.color="$COLOR" label="${CONDITION}" \
              --set weather.details label="${DETAILS_LABEL}" \
+             --set weather.uv icon.color="$UV_COLOR" label="${UV_LABEL}" \
              --set weather.humidity label="${HUMIDITY_LABEL}" \
+             --set weather.rain icon.color="$RAIN_COLOR" label="${RAIN_LABEL}" \
              --set weather.wind label="${WIND_LABEL}"
 }
 
@@ -189,11 +223,13 @@ if [ "$SENDER" = "mouse.clicked" ]; then
   # Update the main bar item
   sketchybar --set "$NAME" label=""
 
-  SUNRISE_LOAD=$(printf "%-10s  %s" "Sunrise" "")
-  SUNSET_LOAD=$(printf "%-10s  %s" "Sunset" "")
-  DETAILS_LOAD=$(printf "%-10s  %s" "Feels like" "")
-  HUMIDITY_LOAD=$(printf "%-10s  %s" "Humidity" "")
-  WIND_LOAD=$(printf "%-10s  %s" "Wind" "")
+  SUNRISE_LOAD=$(printf "%-12s  %s" "Sunrise" "")
+  SUNSET_LOAD=$(printf "%-12s  %s" "Sunset" "")
+  DETAILS_LOAD=$(printf "%-12s  %s" "Feels like" "")
+  UV_LOAD=$(printf "%-12s  %s" "UV Index" "")
+  HUMIDITY_LOAD=$(printf "%-12s  %s" "Humidity" "")
+  RAIN_LOAD=$(printf "%-12s  %s" "Rain chance" "")
+  WIND_LOAD=$(printf "%-12s  %s" "Wind" "")
 
   # Update the popup details
   sketchybar --set weather.location label="" \
@@ -202,7 +238,9 @@ if [ "$SENDER" = "mouse.clicked" ]; then
              --set weather.moon label="" \
              --set weather.condition label="" \
              --set weather.details label="${DETAILS_LOAD}" \
+             --set weather.uv label="${UV_LOAD}" \
              --set weather.humidity label="${HUMIDITY_LOAD}" \
+             --set weather.rain label="${RAIN_LOAD}" \
              --set weather.wind label="${WIND_LOAD}"
   render_bar
 elif [ "$SENDER" = "mouse.entered" ]; then
