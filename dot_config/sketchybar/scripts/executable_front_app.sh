@@ -25,8 +25,12 @@ if [ "$SENDER" = "front_app_switched" ]; then
       ICON=""
       COLOR=${ALPHA_ITEM}${PEACH}
       ;;
-    "Code" | "Cursor" | "Sublime Text" | "IntelliJ IDEA" | "Zed" | "Antigravity")
+    "Code" | "Cursor" | "Antigravity IDE")
       ICON="󰨞"
+      COLOR=${ALPHA_ITEM}${BLUE}
+      ;;
+    "Sublime Text" | "IntelliJ IDEA" | "Zed")
+      ICON=""
       COLOR=${ALPHA_ITEM}${BLUE}
       ;;
     "iTerm2" | "Alacritty" | "Kitty" | "Terminal" | "Warp" | "Kiro CLI")
@@ -37,7 +41,7 @@ if [ "$SENDER" = "front_app_switched" ]; then
       ICON=""
       COLOR=${ALPHA_ITEM}${SAPPHIRE}
       ;;
-    "Gemini" | "ChatGPT")
+    "Gemini" | "ChatGPT" | "Antigravity")
       ICON="󰫢"
       COLOR=${ALPHA_ITEM}${SKY}
       ;;
