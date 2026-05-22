@@ -21,6 +21,7 @@ brew "tlrc"     # man
 brew "d2"
 brew "mise"
 brew "neovim"
+brew "russmckendrick/tap/aicommit"
 
 ## DevOps
 brew "colima"
