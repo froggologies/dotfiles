@@ -54,6 +54,7 @@ brew "grc"
 brew "bjarneo/cliamp/cliamp"
 brew "nowplaying-cli"
 brew "gemini-cli"
+brew "mole"
 
 # ──────────────────────────────
 # CASKS
