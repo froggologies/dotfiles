@@ -1,0 +1,19 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# Brewfile hash: {{ include "./src/Brewfile" | sha256sum }}
+
+echo -e "\033[1;38;5;11m\n❯ Trusting Homebrew taps\033[0m"
+Brewfile=~/.local/share/chezmoi/src/Brewfile
+
+# Extract taps from explicitly listed taps (ignoring commented lines)
+grep -E '^\s*tap\s+"[^"]+"' "$Brewfile" | cut -d'"' -f2 | while read -r tap; do
+  brew trust "$tap" 2>/dev/null || true
+done
+
+# Extract taps from formulas (e.g. brew "user/repo/formula")
+grep -E '^\s*brew\s+"[^"]+/[^"]+/[^"]+"' "$Brewfile" | cut -d'"' -f2 | cut -d'/' -f1,2 | sort -u | while read -r tap; do
+  brew trust "$tap" 2>/dev/null || true
+done
+
+{{- end }}

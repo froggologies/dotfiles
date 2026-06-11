@@ -6,6 +6,7 @@
   "autocomplete.fuzzySearch": true,
   "autocomplete.scrollWrapAround": true,
   "autocomplete.theme": "catppuccin",
+  "chat.greeting.enabled": false,
   "codeWhisperer.shareCodeWhispererContentWithAWS": false,
   "telemetry.enabled": false
 }

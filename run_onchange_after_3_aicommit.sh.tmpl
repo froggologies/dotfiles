@@ -1,8 +1,0 @@
-{{ if eq .chezmoi.os "darwin" -}}
-
-#!/bin/sh
-
-echo "\033[1;38;5;11m\n❯ Setting aicommit\033[0m"
-aic config set AIC_EMOJI=false
-
-{{- end }}

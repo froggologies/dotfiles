@@ -1,0 +1,10 @@
+{{ if eq .chezmoi.os "darwin" -}}
+
+#!/bin/sh
+
+echo "\033[1;38;5;11m\n❯ Setting aicommits\033[0m"
+aicommits config set type=conventional+body
+aicommits config set timeout=10000
+aicommits config set max-length=500
+
+{{- end }}

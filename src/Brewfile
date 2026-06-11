@@ -1,10 +1,10 @@
 # ──────────────────────────────
 # TAPS
 # ──────────────────────────────
-tap "felixkratz/formulae"
-tap "jesseduffield/lazydocker"
-tap "koekeishiya/formulae"
-tap "bjarneo/cliamp"
+# tap "felixkratz/formulae"
+# tap "jesseduffield/lazydocker"
+# tap "koekeishiya/formulae"
+# tap "bjarneo/cliamp"
 
 # ──────────────────────────────
 # BREWS
@@ -21,7 +21,7 @@ brew "tlrc"     # man
 brew "d2"
 brew "mise"
 brew "neovim"
-brew "russmckendrick/tap/aicommit"
+brew "aicommits"
 
 ## DevOps
 brew "colima"
