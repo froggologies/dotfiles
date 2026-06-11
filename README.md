@@ -26,6 +26,7 @@ A curated, automated dotfiles setup for macOS focused on a modern, highly custom
 - **[btop](https://github.com/aristocratos/btop)** - Resource monitor that shows usage and stats for processor, memory, disks, network and processes
 - **[eza](https://github.com/eza-community/eza)** - A modern replacement for ls
 - **[bat](https://github.com/sharkdp/bat)** - A cat clone with syntax highlighting
+- **[mise](https://mise.jdx.dev/)** - Dev tools, env vars, task runner
 - **[Mole](https://github.com/tw93/Mole)** - Clean, uninstall, analyze, optimize, and monitor your Mac from the terminal.
 - **[cliamp](https://github.com/bjarneo/cliamp)** - Terminal music player inspired by winamp
 
@@ -36,17 +37,14 @@ A curated, automated dotfiles setup for macOS focused on a modern, highly custom
 - **[Colima](https://github.com/abiosoft/colima)** - Container runtimes on macOS (and Linux) with minimal setup
 - **[helm](https://helm.sh/)** - The Kubernetes Package Manager
 
-## Chezmoi Scripts
+## Automated Setup
 
-This repository uses several automated scripts to manage installations:
+During `chezmoi apply`, file hashes are tracked to trigger automated installations and configurations:
 
-- **Before Apply:**
-  - `run_onchange_before_1_trust_homebrew_taps.sh.tmpl`: Automatically trusts required Homebrew taps before installation to prevent errors.
-
-- **After Apply:**
-  - `run_onchange_after_1_homebrew.sh.tmpl`: Installs packages listed in the `Brewfile`.
-  - `run_onchange_after_2_mise.sh.tmpl`: Sets up `mise` plugins and tools.
-  - `run_onchange_after_3_aicommits.sh.tmpl`: Configures the `aicommits` tool.
+- **`run_onchange_before_1_trust_homebrew_taps.sh.tmpl`**: Parses `src/Brewfile` to automatically `brew trust` third-party taps.
+- **`run_onchange_after_1_homebrew.sh.tmpl`**: Runs `brew bundle` against `src/Brewfile` and automatically restarts services like `sketchybar` and `borders`.
+- **`run_onchange_after_2_mise.sh.tmpl`**: Runs `mise install` using `dot_config/mise/config.toml` to provision runtimes (Node, Python) and global npm packages.
+- **`run_onchange_after_3_aicommits.sh.tmpl`**: Configures the `aicommits` tool.
 
 ## Setup
 
